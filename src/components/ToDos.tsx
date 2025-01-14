@@ -14,13 +14,14 @@ import {
 
 import "../styles/component/TodoList.css";
 import { RootState, AppDispatch } from "../store/store";
+import ViewTodo from "./ViewToDo";
 
 const ToDos = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
-
+  const [viewingTodo, setViewingTodo] = useState<string | null>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
-  const { todos, loading, error, success } = useSelector(
+  const { todos, loading, error } = useSelector(
     (state: RootState) => state.todo
   );
 
@@ -61,6 +62,18 @@ const ToDos = () => {
     setShowModal(false);
   };
 
+  const handleViewTodo = (todoId: string) => {
+    setViewingTodo(todoId);
+  };
+
+  const handleCloseView = () => {
+    setViewingTodo(null);
+  };
+
+  const viewingTodoData = viewingTodo
+    ? todos.find((todo) => todo.id === viewingTodo)
+    : null;
+
   return (
     <div className="todo-container">
       <div className="todo-header">
@@ -89,11 +102,20 @@ const ToDos = () => {
                 todo={todo}
                 onHandleDeleteTodo={handleDeleteTodo}
                 onHandleEditTodo={handleEditTodo}
+                onHandleViewTodo={handleViewTodo}
               />
             </li>
           )
         )}
       </ul>
+
+      {viewingTodoData && (
+        <ViewTodo
+          todo={viewingTodoData}
+          isOpen={!!viewingTodo}
+          onClose={handleCloseView}
+        />
+      )}
     </div>
   );
 };

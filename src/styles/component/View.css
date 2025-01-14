@@ -1,0 +1,35 @@
+.view-todo {
+  padding: var(--spacing-md);
+}
+
+.view-todo__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.view-todo__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.view-todo__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.view-todo__value {
+  font-size: 1rem;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .view-todo {
+    padding: var(--spacing-sm);
+  }
+}
