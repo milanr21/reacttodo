@@ -10,15 +10,18 @@ import {
   getTodo,
   deleteTodoSuccess,
   updateTodoSuccess,
+  getTodoSuccess,
 } from "../features/Todos/store/TodoSlice";
 
 import "../styles/component/TodoList.css";
 import { RootState, AppDispatch } from "../store/store";
 import ViewTodo from "./ViewToDo";
+import { loadFromLocalStorage } from "../utils/localStorage";
 
 const ToDos = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [viewingTodo, setViewingTodo] = useState<string | null>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const { todos, loading, error } = useSelector(
@@ -26,17 +29,31 @@ const ToDos = () => {
   );
 
   useEffect(() => {
-    // Fetch todos initially
-    dispatch(getTodo());
+    const loadLocalStorage = JSON.parse(loadFromLocalStorage("todos"));
+    console.log("The local storage loading", loadLocalStorage);
+
+    if (loadLocalStorage && Array.isArray(loadLocalStorage)) {
+      dispatch(getTodoSuccess(loadLocalStorage));
+    } else {
+      dispatch(getTodo());
+    }
   }, [dispatch]);
+
+  const handleAddModal = () => {
+    setShowAddModal(true);
+  };
 
   const handleAddTodo = (newTodo: {
     id: string;
     title: string;
     description: string;
+    startDate: string;
+    endDate: string;
+
     completed: boolean;
   }) => {
     dispatch(addTodoSuccess(newTodo));
+    setShowAddModal(false);
   };
 
   const handleDeleteTodo = (id: string) => {
@@ -51,6 +68,8 @@ const ToDos = () => {
     id: string;
     title: string;
     description: string;
+    startDate: string;
+    endDate: string;
     completed: boolean;
   }) => {
     dispatch(updateTodoSuccess(updatedTodo));
@@ -80,14 +99,22 @@ const ToDos = () => {
         <h1>Todo App</h1>
       </div>
 
-      <AddToDo onHandleAddTodo={handleAddTodo} />
+      <button onClick={handleAddModal} className="btn btn--primary">
+        Add New Todo
+      </button>
+
+      <AddToDo
+        isOpen={showAddModal}
+        handleClose={() => setShowAddModal(false)}
+        onHandleAddTodo={handleAddTodo}
+      />
 
       {loading && <div className="todo-loading">Loading...</div>}
       {error && <div className="todo-error">Error: {error}</div>}
 
       {/* ToDo List */}
       <ul className="todo-list">
-        {todos.map((todo) =>
+        {todos?.map((todo) =>
           editingTodoId === todo.id ? (
             <li key={todo.id}>
               <EditToDo

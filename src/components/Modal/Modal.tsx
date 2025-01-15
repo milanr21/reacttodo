@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import ReactDOM from "react-dom";
 import "./modal.css";
+import { AiOutlineClose } from "react-icons/ai";
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,6 +19,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
         {title && (
           <div className="modal-header">
             <h2 className="modal-title">{title}</h2>
+            <button className="modal-close" onClick={onClose}>
+              <AiOutlineClose />
+            </button>
           </div>
         )}
         <div className="modal-body">{children}</div>

@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { saveToLocalStorage } from "../../../utils/localStorage";
+import { toast } from "react-toastify";
 
 export interface Todo {
   id: string;
   title: string;
   description: string;
+  startDate: string;
+  endDate: string;
   completed: boolean;
 }
 
@@ -35,6 +38,7 @@ const TodoSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.todos.push(action.payload);
+      toast.success("Todo Added Successfully");
       saveToLocalStorage("todos", state.todos);
     },
     addTodoFailure(state, action: PayloadAction<string>) {
@@ -51,6 +55,7 @@ const TodoSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
+      toast.success("Todo Deleted Successfully");
     },
     deleteTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -68,6 +73,7 @@ const TodoSlice = createSlice({
       state.todos = state.todos.map((todo) =>
         todo.id === action.payload.id ? action.payload : todo
       );
+      toast.success("Todo Updated Successfully");
     },
     updateTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;

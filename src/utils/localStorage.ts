@@ -9,9 +9,15 @@ export const saveToLocalStorage = <T>(key: string, data: T): void => {
 
 export const loadFromLocalStorage = (key: string) => {
   try {
-    const serializedStore = JSON.parse(key);
-    localStorage.getItem(JSON.parse(serializedStore));
+    const serializedStore = localStorage.getItem(key);
+
+    if (serializedStore) {
+      return JSON.parse(serializedStore);
+    }
+
+    return [];
   } catch (error) {
     console.log("The localStorage error is", error);
+    return [];
   }
 };
