@@ -1,5 +1,6 @@
 .input-group {
   display: flex;
+  margin: 0 30px;
   flex-direction: column;
   gap: var(--spacing-xs);
   margin-bottom: var(--spacing-md);

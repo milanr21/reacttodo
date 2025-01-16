@@ -69,7 +69,9 @@ export function DragHandle() {
   const dragButton = {
     cursor: "move",
     padding: "0.2rem",
-    outline: "none",
+    border: "none",
+    backgroundColor: "var(--color-background)",
+    borderRadius: "0.5rem",
   };
 
   return (
