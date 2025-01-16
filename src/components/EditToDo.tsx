@@ -4,6 +4,7 @@ import "../styles/component/Input.css";
 import "../styles/component/Button.css";
 
 interface EditToDoProps {
+  showEditModal: boolean;
   todo: {
     id: string;
     title: string;
@@ -27,6 +28,7 @@ const EditToDo: React.FC<EditToDoProps> = ({
   todo,
   onHandleUpdateTodo,
   onCancelEdit,
+  showEditModal,
 }) => {
   const [title, setTitle] = useState(todo.title);
   const [description, setDescription] = useState(todo.description);
@@ -58,30 +60,28 @@ const EditToDo: React.FC<EditToDoProps> = ({
       ...todo,
       title: title,
       description: description,
-      startDate: todo.startDate,
-      endDate: todo.endDate,
+      startDate: startDate,
+      endDate: endDate,
     };
 
     onHandleUpdateTodo(updatedTodo);
   };
 
   return (
-    <Modal isOpen={true} title="Edit ToDO" onClose={onCancelEdit}>
+    <Modal isOpen={showEditModal} title="Edit Todo" onClose={onCancelEdit}>
       <form onSubmit={handleUpdateTodo}>
         <div className="input-group">
           <label className="input-label" htmlFor="title">
             Title
           </label>
-          <div>
-            <input
-              id="title"
-              type="text"
-              value={title}
-              className="input-field"
-              onChange={handleTitleChange}
-              placeholder="Edit todo title"
-            />
-          </div>
+          <input
+            id="title"
+            type="text"
+            value={title}
+            className="input-field"
+            onChange={handleTitleChange}
+            placeholder="Edit todo title"
+          />
         </div>
 
         <div className="input-group">
@@ -90,16 +90,16 @@ const EditToDo: React.FC<EditToDoProps> = ({
           </label>
           <input
             id="description"
-            type="text"
             value={description}
             onChange={handleDescriptionChange}
             className="input-field textarea-field"
             placeholder="Edit todo description"
           />
         </div>
+
         <div className="input-group">
           <label className="input-label" htmlFor="start-date">
-            Start Date and Time
+            Start Date & Time
           </label>
           <input
             id="start-date"
@@ -110,9 +110,10 @@ const EditToDo: React.FC<EditToDoProps> = ({
             placeholder="Start Date and Time"
           />
         </div>
+
         <div className="input-group">
           <label className="input-label" htmlFor="end-date">
-            End Date and Time
+            End Date & Time
           </label>
           <input
             id="end-date"
@@ -120,7 +121,7 @@ const EditToDo: React.FC<EditToDoProps> = ({
             value={endDate}
             onChange={handleEndDateChange}
             className="input-field"
-            placeholder="Start Date adn Time"
+            placeholder="End Date and Time"
           />
         </div>
 

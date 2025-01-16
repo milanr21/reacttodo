@@ -18,12 +18,15 @@ import { RootState, AppDispatch } from "../store/store";
 import ViewTodo from "./ViewToDo";
 import { loadFromLocalStorage } from "../utils/localStorage";
 
-const ToDos = () => {
+import "../styles/component/Todos.css";
+
+const Todos = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
   const [viewingTodo, setViewingTodo] = useState<string | null>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const { todos, loading, error } = useSelector(
     (state: RootState) => state.todo
   );
@@ -49,7 +52,6 @@ const ToDos = () => {
     description: string;
     startDate: string;
     endDate: string;
-
     completed: boolean;
   }) => {
     dispatch(addTodoSuccess(newTodo));
@@ -89,35 +91,59 @@ const ToDos = () => {
     setViewingTodo(null);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
+  // Filter todos based on the search query
+  const filteredTodos = todos.filter((todo) =>
+    todo.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const viewingTodoData = viewingTodo
     ? todos.find((todo) => todo.id === viewingTodo)
     : null;
 
   return (
     <div className="todo-container">
+      {/* Top Bar */}
       <div className="todo-header">
+        <img src="/logo.png" alt="Logo" />
         <h1>Todo App</h1>
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search todos..."
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+          <button>Search</button>
+        </div>
       </div>
 
+      {/* Add Todo Button */}
       <button onClick={handleAddModal} className="btn btn--primary">
         Add New Todo
       </button>
 
+      {/* Add Todo Modal */}
       <AddToDo
         isOpen={showAddModal}
         handleClose={() => setShowAddModal(false)}
         onHandleAddTodo={handleAddTodo}
       />
 
+      {/* Loading and Error States */}
       {loading && <div className="todo-loading">Loading...</div>}
       {error && <div className="todo-error">Error: {error}</div>}
 
-      {/* ToDo List */}
+      {/* Todo List */}
       <ul className="todo-list">
-        {todos?.map((todo) =>
+        {filteredTodos?.map((todo) =>
           editingTodoId === todo.id ? (
             <li key={todo.id}>
               <EditToDo
+                showEditModal={showModal}
                 todo={todo}
                 onHandleUpdateTodo={handleUpdateTodo}
                 onCancelEdit={handleCancelEdit}
@@ -126,7 +152,10 @@ const ToDos = () => {
           ) : (
             <li key={todo.id}>
               <ToDoList
-                todo={todo}
+                todo={{
+                  ...todo,
+                  createdDate: todo.startDate || "N/A",
+                }}
                 onHandleDeleteTodo={handleDeleteTodo}
                 onHandleEditTodo={handleEditTodo}
                 onHandleViewTodo={handleViewTodo}
@@ -136,6 +165,7 @@ const ToDos = () => {
         )}
       </ul>
 
+      {/* View Todo Modal */}
       {viewingTodoData && (
         <ViewTodo
           todo={viewingTodoData}
@@ -147,4 +177,4 @@ const ToDos = () => {
   );
 };
 
-export default ToDos;
+export default Todos;

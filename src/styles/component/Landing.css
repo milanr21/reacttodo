@@ -14,8 +14,8 @@
 }
 
 .logo {
-  width: 150px; /* Adjust the width as needed */
-  margin-bottom: 20px; /* Space between logo and title */
+  width: 150px;
+  margin-bottom: 20px;
 }
 
 .title {
@@ -49,7 +49,7 @@
 
 @media (max-width: 768px) {
   .logo {
-    width: 120px; /* Adjust logo size for smaller screens */
+    width: 120px;
   }
 
   .title {
