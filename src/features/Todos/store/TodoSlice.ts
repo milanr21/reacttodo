@@ -76,6 +76,7 @@ const TodoSlice = createSlice({
         todo.id === action.payload.id ? action.payload : todo
       );
       toast.info('Todo Updated Successfully');
+      saveToLocalStorage('todos', state.todos);
     },
     updateTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -101,7 +102,7 @@ const TodoSlice = createSlice({
       const index = state.todos.findIndex((todo) => todo.id === action.payload);
       if (index !== -1) {
         state.todos[index].completed = !state.todos[index].completed;
-        localStorage.setItem('todos', JSON.stringify(state.todos));
+        saveToLocalStorage('todos', state.todos);
       }
     },
     resetState() {

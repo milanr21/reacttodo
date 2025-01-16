@@ -2,49 +2,49 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Installation Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Follow these steps to set up the project locally:
 
-## Expanding the ESLint configuration
+### 1. Create a New Vite + React + TypeScript Project
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Run the following command to create a new project with Vite, React, and TypeScript:
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm create vite@latest reacttodo --template react-ts
+cd reacttodo
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2. Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+npm install @reduxjs/toolkit react-redux @dnd-kit/core @dnd-kit/sortable @material/tooltip lucide-react react-router-dom react-toastify dayjs
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### 3. Run the Server
+
+npm run dev
+
+### 4. Build the App for Production
+
+Build the app for Production
+
+### 5. Deploy in Vercel
+
+# React Todo App
+
+This is a Todo application built using **Vite**, **React**, **TypeScript**, and **Redux Toolkit** for state management. It allows users to manage their todos with functionalities such as adding, editing, toggling completion status, searching, and persisting todos across browser sessions using **localStorage**.
+
+## Features
+
+- **Todo List Management**: Display a list of todos with details such as title, description, created date, end date, and completion status.
+
+- **Add, Edit, and View Todos**: Easily add new todos, edit existing ones, and view todo details.
+
+- **Toggle Todo Status**: Toggle todos between "Completed" or "Not Completed".
+
+- **Search Todos**: Search for specific todos by title or description.
+
+- **Date Formatting**: Dates (created and end date) are formatted using **dayjs**.
+
+- **Responsive UI**: Built with **Lucide icons** and Material Tooltips for an enhanced user experience.
+
+- **Persistence**: Todos are stored in **localStorage**, making them persistent across browser refreshes or restarts.

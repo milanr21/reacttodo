@@ -1,5 +1,6 @@
 import React from 'react';
 import { Edit, Trash, Eye, Power } from 'lucide-react';
+import dayjs from 'dayjs';
 
 import { ToDoListProps } from '../../types/todo';
 
@@ -20,8 +21,8 @@ const ToDoList: React.FC<ToDoListProps> = ({
       </div>
       <p className='todo-item__description'>{todo.description}</p>
       <div className='todo-item__date'>
-        {todo.completed ? 'Completed' : 'Updated on'}:{' '}
-        {new Date().toLocaleDateString()}
+        Date:
+        {dayjs(todo.startDate).format('MMM DD, YYYY') ?? 'N/A'}
       </div>
       <div className='todo-item__actions'>
         <SortableList.DragHandle />

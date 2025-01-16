@@ -1,7 +1,7 @@
 export const saveToLocalStorage = <T>(key: string, data: T): void => {
   try {
     const serializedState = JSON.stringify(data);
-    localStorage.setItem(key, JSON.stringify(serializedState));
+    localStorage.setItem(key, serializedState);
   } catch (error) {
     console.log('The localStorage error is', error);
   }

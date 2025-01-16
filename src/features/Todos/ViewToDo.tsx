@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import Modal from '../../components/Modal/Modal';
 import { ViewTodoProps } from '../../types/todo';
 
@@ -21,11 +23,19 @@ const ViewTodo: React.FC<ViewTodoProps> = ({ todo, isOpen, onClose }) => {
           <div className='view-todo__details'>
             <div className='view-todo__field'>
               <h3 className='view-todo__label'>Start Date</h3>
-              <p className='view-todo__value'>{todo.startDate || 'N/A'}</p>
+              <p className='view-todo__value'>
+                {todo.startDate
+                  ? dayjs(todo.startDate).format('MMM DD, YYYY')
+                  : 'N/A'}
+              </p>
             </div>
             <div className='view-todo__field'>
               <h3 className='view-todo__label'>End Date</h3>
-              <p className='view-todo__value'>{todo.endDate || 'N/A'}</p>
+              <p className='view-todo__value'>
+                {todo.endDate
+                  ? dayjs(todo.endDate).format('MMM DD, YYYY')
+                  : 'N/A'}
+              </p>
             </div>
           </div>
           <div className='view-todo__field'>
