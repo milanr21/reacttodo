@@ -55,7 +55,8 @@ const TodoSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      toast.success("Todo Deleted Successfully");
+      saveToLocalStorage("todos", state.todos);
+      toast.error("Todo Deleted Successfully");
     },
     deleteTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -73,7 +74,7 @@ const TodoSlice = createSlice({
       state.todos = state.todos.map((todo) =>
         todo.id === action.payload.id ? action.payload : todo
       );
-      toast.success("Todo Updated Successfully");
+      toast.info("Todo Updated Successfully");
     },
     updateTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -95,6 +96,13 @@ const TodoSlice = createSlice({
       state.success = false;
       state.error = action.payload;
     },
+    toggleCompleteTodo(state, action: PayloadAction<string>) {
+      const index = state.todos.findIndex((todo) => todo.id === action.payload);
+      if (index !== -1) {
+        state.todos[index].completed = !state.todos[index].completed;
+        localStorage.setItem("todos", JSON.stringify(state.todos));
+      }
+    },
     resetState() {
       return initialState;
     },
@@ -115,6 +123,7 @@ export const {
   getTodoSuccess,
   getTodoFailure,
   resetState,
+  toggleCompleteTodo,
 } = TodoSlice.actions;
 
 export default TodoSlice.reducer;

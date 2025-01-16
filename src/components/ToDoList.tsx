@@ -1,5 +1,6 @@
 import React from "react";
-import { Edit, Trash, Eye } from "lucide-react";
+import { Edit, Trash, Eye, Power } from "lucide-react";
+
 import "../styles/component/TodoList.css";
 import { SortableList } from "../Sortable/SortableList";
 
@@ -16,6 +17,7 @@ interface ToDoListProps {
   onHandleDeleteTodo: (id: string) => void;
   onHandleEditTodo: (todoId: string) => void;
   onHandleViewTodo: (todoId: string) => void;
+  onHandleToggleComplete: (todoId: string) => void;
 }
 
 const ToDoList: React.FC<ToDoListProps> = ({
@@ -23,6 +25,7 @@ const ToDoList: React.FC<ToDoListProps> = ({
   onHandleDeleteTodo,
   onHandleEditTodo,
   onHandleViewTodo,
+  onHandleToggleComplete,
 }) => {
   return (
     <div className="todo-item">
@@ -58,6 +61,14 @@ const ToDoList: React.FC<ToDoListProps> = ({
             title="Delete Todo"
           >
             <Trash size={20} />
+          </button>
+
+          <button
+            onClick={() => onHandleToggleComplete(todo.id)}
+            className="icon-btn"
+            title="Complete Todo"
+          >
+            <Power size={20} />
           </button>
         </div>
       </div>

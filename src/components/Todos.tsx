@@ -14,6 +14,7 @@ import {
   deleteTodoSuccess,
   updateTodoSuccess,
   getTodoSuccess,
+  toggleCompleteTodo,
 } from "../features/Todos/store/TodoSlice";
 
 import { RootState, AppDispatch } from "../store/store";
@@ -30,9 +31,7 @@ const Todos = () => {
   const [viewingTodo, setViewingTodo] = useState<string | null>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const { todos, loading, error } = useSelector(
-    (state: RootState) => state.todo
-  );
+  const { todos } = useSelector((state: RootState) => state.todo);
 
   const [items, setItems] = useState(todos);
 
@@ -40,9 +39,23 @@ const Todos = () => {
     setItems(todos);
   }, [todos]);
 
+  const loadFromLocalStorage = (key: string): string | null => {
+    const item = localStorage.getItem(key);
+    return item ? item : null;
+  };
+
   useEffect(() => {
-    const loadLocalStorage = JSON.parse(loadFromLocalStorage("todos"));
-    console.log("The local storage loading", loadLocalStorage);
+    const storedTodos = loadFromLocalStorage("todos");
+
+    // Check if there are items in localStorage and safely parse the data
+    let loadLocalStorage: any = [];
+    try {
+      loadLocalStorage = storedTodos ? JSON.parse(storedTodos) : [];
+      console.log("The local storage loading", loadLocalStorage);
+    } catch (e) {
+      console.error("Error parsing localStorage data", e);
+      loadLocalStorage = []; // Fallback to an empty array if parsing fails
+    }
 
     if (loadLocalStorage && Array.isArray(loadLocalStorage)) {
       dispatch(getTodoSuccess(loadLocalStorage));
@@ -85,6 +98,7 @@ const Todos = () => {
   }) => {
     dispatch(updateTodoSuccess(updatedTodo));
     setEditingTodoId(null);
+    setShowModal(false);
   };
 
   const handleCancelEdit = () => {
@@ -94,6 +108,10 @@ const Todos = () => {
 
   const handleViewTodo = (todoId: string) => {
     setViewingTodo(todoId);
+  };
+
+  const handleToggleComplete = (id: string) => {
+    dispatch(toggleCompleteTodo(id));
   };
 
   const handleCloseView = () => {
@@ -141,7 +159,7 @@ const Todos = () => {
 
       {editingTodoId && (
         <EditToDo
-          showEditModal={!!editingTodoId}
+          showEditModal={showModal}
           //showEditModal={showModal}
           todo={todos.find((todo) => todo.id === editingTodoId)!}
           onHandleUpdateTodo={handleUpdateTodo}
@@ -162,7 +180,16 @@ const Todos = () => {
               onHandleDeleteTodo={handleDeleteTodo}
               onHandleEditTodo={handleEditTodo}
               onHandleViewTodo={handleViewTodo}
+              onHandleToggleComplete={handleToggleComplete}
             />
+            <button
+              onClick={() => handleToggleComplete(item.id)}
+              className={`btn ${
+                item.completed ? "btn--success" : "btn--secondary"
+              }`}
+            >
+              {item.completed ? "Mark Completed" : "Mark Incompleted"}
+            </button>
 
             {/* <SortableItems item={item} /> */}
 

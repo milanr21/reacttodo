@@ -117,9 +117,12 @@ const AddToDo: React.FC<AddToDoProps> = ({
               placeholder="Add a description"
             />
           </div>
-          <button type="submit" className="btn btn--primary">
-            Add Todo
-          </button>
+
+          <div className="modal-footer">
+            <button type="submit" className="btn btn--primary">
+              Add Todo
+            </button>
+          </div>
         </form>
       </div>
     </Modal>

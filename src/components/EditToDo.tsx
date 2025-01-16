@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "./Modal/Modal";
 import "../styles/component/Input.css";
 import "../styles/component/Button.css";
@@ -50,6 +50,13 @@ const EditToDo: React.FC<EditToDoProps> = ({
   const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   };
+
+  useEffect(() => {
+    setTitle(todo.title);
+    setDescription(todo.description);
+    setStartDate(todo.startDate);
+    setEndDate(todo.endDate);
+  }, [todo]);
 
   const handleUpdateTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -133,8 +140,8 @@ const EditToDo: React.FC<EditToDoProps> = ({
           >
             Cancel
           </button>
-          <button type="submit" className="btn btn--primary">
-            Update Todo
+          <button type="submit" className="btn btn--primary ">
+            Update
           </button>
         </div>
       </form>
