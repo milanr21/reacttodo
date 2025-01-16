@@ -119,6 +119,19 @@
   text-align: center;
 }
 
+.empty-todo-message {
+  font-size: 1.2rem;
+  color: 'red';
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
+  margin: auto;
+  font-weight: 500;
+}
+
+/* Media Queries */
+
 @media (max-width: 768px) {
   .todo-header {
     flex-direction: column;

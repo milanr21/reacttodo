@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { saveToLocalStorage } from "../../../utils/localStorage";
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { saveToLocalStorage } from '../../../utils/localStorage';
 
 export interface Todo {
   id: string;
@@ -26,7 +27,7 @@ const initialState: TodoState = {
 };
 
 const TodoSlice = createSlice({
-  name: "todo",
+  name: 'todo',
   initialState,
   reducers: {
     addTodo(state) {
@@ -38,13 +39,13 @@ const TodoSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.todos.push(action.payload);
-      toast.success("Todo Added Successfully");
-      saveToLocalStorage("todos", state.todos);
+      toast.success('Todo Added Successfully');
+      saveToLocalStorage('todos', state.todos);
     },
     addTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
       state.success = false;
-      state.error = action.payload || "Error While adding new ToDo";
+      state.error = action.payload || 'Error While adding new ToDo';
     },
     deleteTodo(state) {
       state.loading = true;
@@ -55,8 +56,8 @@ const TodoSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.todos = state.todos.filter((todo) => todo.id !== action.payload);
-      saveToLocalStorage("todos", state.todos);
-      toast.error("Todo Deleted Successfully");
+      saveToLocalStorage('todos', state.todos);
+      toast.error('Todo Deleted Successfully');
     },
     deleteTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -74,7 +75,7 @@ const TodoSlice = createSlice({
       state.todos = state.todos.map((todo) =>
         todo.id === action.payload.id ? action.payload : todo
       );
-      toast.info("Todo Updated Successfully");
+      toast.info('Todo Updated Successfully');
     },
     updateTodoFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -100,7 +101,7 @@ const TodoSlice = createSlice({
       const index = state.todos.findIndex((todo) => todo.id === action.payload);
       if (index !== -1) {
         state.todos[index].completed = !state.todos[index].completed;
-        localStorage.setItem("todos", JSON.stringify(state.todos));
+        localStorage.setItem('todos', JSON.stringify(state.todos));
       }
     },
     resetState() {

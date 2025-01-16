@@ -1,21 +1,22 @@
-import React, { useMemo, useState } from "react";
-import type { ReactNode } from "react";
+import React, { useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
+
+import type { Active, UniqueIdentifier } from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+} from '@dnd-kit/sortable';
 import {
   DndContext,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-} from "@dnd-kit/core";
-import type { Active, UniqueIdentifier } from "@dnd-kit/core";
-import {
-  SortableContext,
-  arrayMove,
-  sortableKeyboardCoordinates,
-} from "@dnd-kit/sortable";
+} from '@dnd-kit/core';
 
-import { DragHandle, SortableItem } from "./components/SortableItem";
-import { SortableOverlay } from "./components/SortableOverlay";
+import { SortableOverlay } from './components/SortableOverlay';
+import { DragHandle, SortableItem } from './components/SortableItem';
 
 interface BaseItem {
   id: UniqueIdentifier;
@@ -45,7 +46,7 @@ export function SortableList<T extends BaseItem>({
   );
 
   const divStyle = {
-    listStyleType: "none",
+    listStyleType: 'none',
   };
 
   return (
@@ -68,7 +69,7 @@ export function SortableList<T extends BaseItem>({
       }}
     >
       <SortableContext items={items}>
-        <ul style={divStyle} className="SortableList" role="application">
+        <ul style={divStyle} className='SortableList' role='application'>
           {items.map((item) => (
             <React.Fragment key={item.id}>{renderItem(item)}</React.Fragment>
           ))}

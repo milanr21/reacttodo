@@ -70,6 +70,8 @@
   background-color: var(--color-primary-light);
 }
 
+/* Media Queries */
+
 @media (max-width: 768px) {
   .input-group {
     margin-bottom: var(--spacing-sm);

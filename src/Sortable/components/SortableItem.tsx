@@ -1,13 +1,13 @@
-import { createContext, useContext, useMemo } from "react";
-import type { CSSProperties, PropsWithChildren } from "react";
+import { Hand } from 'lucide-react';
+import { createContext, useContext, useMemo } from 'react';
+import type { CSSProperties, PropsWithChildren } from 'react';
+
 import type {
   DraggableSyntheticListeners,
   UniqueIdentifier,
-} from "@dnd-kit/core";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-
-import { Hand } from "lucide-react";
+} from '@dnd-kit/core';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface Props {
   id: UniqueIdentifier;
@@ -47,16 +47,16 @@ export function SortableItem({ children, id }: PropsWithChildren<Props>) {
     opacity: isDragging ? 0.4 : undefined,
     transform: CSS.Translate.toString(transform),
     transition,
-    listStyleType: "none",
+    listStyleType: 'none',
 
-    marginBottom: "2rem",
+    marginBottom: '2rem',
     // cursor: "move",
     // userSelect: "none",
   };
 
   return (
     <SortableItemContext.Provider value={context}>
-      <li className="SortableItem" ref={setNodeRef} style={style}>
+      <li className='SortableItem' ref={setNodeRef} style={style}>
         {children}
       </li>
     </SortableItemContext.Provider>
@@ -67,11 +67,11 @@ export function DragHandle() {
   const { attributes, listeners, ref } = useContext(SortableItemContext);
 
   const dragButton = {
-    cursor: "move",
-    padding: "0.2rem",
-    border: "none",
-    backgroundColor: "var(--color-background)",
-    borderRadius: "0.5rem",
+    cursor: 'move',
+    padding: '0.2rem',
+    border: 'none',
+    backgroundColor: 'var(--color-background)',
+    borderRadius: '0.5rem',
   };
 
   return (

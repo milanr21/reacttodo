@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import MainLogoImg from "../assets/Logo.png";
+
 import "../styles/component/Landing.css";
 
-const LandingPage = () => {
+const Home = () => {
   return (
     <div className="landing-page">
       <header className="header">
-        <img src={MainLogoImg} alt="Tasksy Logo" className="logo" />
+        <img src={MainLogoImg} alt="Tasksy_Logo" className="logo" />
         <h1 className="title">Welcome to Tasksy</h1>
         <p className="description">
           Streamline your tasks with our intuitive ToDo list app, designed to
@@ -24,4 +25,5 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Home;
+

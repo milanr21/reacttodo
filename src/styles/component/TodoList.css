@@ -87,6 +87,8 @@
   color: #ffffff;
 }
 
+/* Media Queries */
+
 @media (max-width: 640px) {
   .todo-list {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

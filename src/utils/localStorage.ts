@@ -3,7 +3,7 @@ export const saveToLocalStorage = <T>(key: string, data: T): void => {
     const serializedState = JSON.stringify(data);
     localStorage.setItem(key, JSON.stringify(serializedState));
   } catch (error) {
-    console.log("The localStorage error is", error);
+    console.log('The localStorage error is', error);
   }
 };
 
@@ -17,7 +17,7 @@ export const loadFromLocalStorage = (key: string) => {
 
     return [];
   } catch (error) {
-    console.log("The localStorage error is", error);
+    console.log('The localStorage error is', error);
     return [];
   }
 };
