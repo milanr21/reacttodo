@@ -50,7 +50,7 @@ const AddToDo: React.FC<AddToDoProps> = ({
     const newTodoItem = {
       id: Date.now().toString(),
       title: newTodo,
-      description: "",
+      description: description,
       startDate: startDate,
       endDate: endDate,
       completed: false,

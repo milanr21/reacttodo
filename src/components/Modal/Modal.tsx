@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import ReactDOM from "react-dom";
-import "./modal.css";
+import "../../styles/component/Modal.css";
 import { AiOutlineClose } from "react-icons/ai";
 
 interface ModalProps {

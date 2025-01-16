@@ -5,6 +5,9 @@ import AddToDo from "./AddToDo";
 import ToDoList from "./ToDoList";
 import EditToDo from "./EditToDo";
 
+import MainLogoImg from "../assets/Logo.png";
+import { Plus } from "lucide-react";
+
 import {
   addTodoSuccess,
   getTodo,
@@ -13,12 +16,12 @@ import {
   getTodoSuccess,
 } from "../features/Todos/store/TodoSlice";
 
-import "../styles/component/TodoList.css";
 import { RootState, AppDispatch } from "../store/store";
 import ViewTodo from "./ViewToDo";
 import { loadFromLocalStorage } from "../utils/localStorage";
 
 import "../styles/component/Todos.css";
+import { SortableList } from "../Sortable/SortableList";
 
 const Todos = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,6 +33,12 @@ const Todos = () => {
   const { todos, loading, error } = useSelector(
     (state: RootState) => state.todo
   );
+
+  const [items, setItems] = useState(todos);
+
+  useEffect(() => {
+    setItems(todos);
+  }, [todos]);
 
   useEffect(() => {
     const loadLocalStorage = JSON.parse(loadFromLocalStorage("todos"));
@@ -95,7 +104,6 @@ const Todos = () => {
     setSearchQuery(e.target.value);
   };
 
-  // Filter todos based on the search query
   const filteredTodos = todos.filter((todo) =>
     todo.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -106,14 +114,12 @@ const Todos = () => {
 
   return (
     <div className="todo-container">
-      {/* Top Bar */}
       <div className="todo-header">
-        <img src="/logo.png" alt="Logo" />
-        <h1>Todo App</h1>
+        <img src={MainLogoImg} alt="Logo" />
         <div className="search-bar">
           <input
             type="text"
-            placeholder="Search todos..."
+            placeholder="search...."
             value={searchQuery}
             onChange={handleSearch}
           />
@@ -121,51 +127,50 @@ const Todos = () => {
         </div>
       </div>
 
-      {/* Add Todo Button */}
-      <button onClick={handleAddModal} className="btn btn--primary">
-        Add New Todo
-      </button>
+      <div>
+        <button onClick={handleAddModal} className="btn btn--primary">
+          <Plus /> <span>Add</span>
+        </button>
+      </div>
 
-      {/* Add Todo Modal */}
       <AddToDo
         isOpen={showAddModal}
         handleClose={() => setShowAddModal(false)}
         onHandleAddTodo={handleAddTodo}
       />
 
-      {/* Loading and Error States */}
-      {loading && <div className="todo-loading">Loading...</div>}
-      {error && <div className="todo-error">Error: {error}</div>}
+      {editingTodoId && (
+        <EditToDo
+          showEditModal={!!editingTodoId}
+          //showEditModal={showModal}
+          todo={todos.find((todo) => todo.id === editingTodoId)!}
+          onHandleUpdateTodo={handleUpdateTodo}
+          onCancelEdit={handleCancelEdit}
+        />
+      )}
 
-      {/* Todo List */}
-      <ul className="todo-list">
-        {filteredTodos?.map((todo) =>
-          editingTodoId === todo.id ? (
-            <li key={todo.id}>
-              <EditToDo
-                showEditModal={showModal}
-                todo={todo}
-                onHandleUpdateTodo={handleUpdateTodo}
-                onCancelEdit={handleCancelEdit}
-              />
-            </li>
-          ) : (
-            <li key={todo.id}>
-              <ToDoList
-                todo={{
-                  ...todo,
-                  createdDate: todo.startDate || "N/A",
-                }}
-                onHandleDeleteTodo={handleDeleteTodo}
-                onHandleEditTodo={handleEditTodo}
-                onHandleViewTodo={handleViewTodo}
-              />
-            </li>
-          )
+      <SortableList
+        items={filteredTodos}
+        onChange={setItems}
+        renderItem={(item) => (
+          <SortableList.Item id={item.id}>
+            <ToDoList
+              todo={{
+                ...item,
+                createdDate: item.startDate || "N/A",
+              }}
+              onHandleDeleteTodo={handleDeleteTodo}
+              onHandleEditTodo={handleEditTodo}
+              onHandleViewTodo={handleViewTodo}
+            />
+
+            {/* <SortableItems item={item} /> */}
+
+            <SortableList.Item id={item.id} />
+          </SortableList.Item>
         )}
-      </ul>
+      ></SortableList>
 
-      {/* View Todo Modal */}
       {viewingTodoData && (
         <ViewTodo
           todo={viewingTodoData}

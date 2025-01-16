@@ -1,13 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  transition: background-color 0.2s ease;
+}
+
 :root {
   --color-primary: #3b82f6;
   --color-primary-hover: #2563eb;
   --color-secondary: #64748b;
   --color-danger: #ef4444;
   --color-success: #22c55e;
-  --color-background: #f8fafc;
-  --color-surface: #ffffff;
+  --color-background: #f3e5f5;
+  --color-surface: #faf4ff;
   --color-text: #1e293b;
-  --color-text-light: #64748b;
+  --color-text-light: #333333;
   --color-border: #e2e8f0;
 
   --spacing-xs: 0.25rem;

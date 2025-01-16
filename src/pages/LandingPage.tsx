@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import MainLogoImg from "../assets/Logo.svg";
+import MainLogoImg from "../assets/Logo.png";
 import "../styles/component/Landing.css";
 
 const LandingPage = () => {
@@ -17,7 +17,7 @@ const LandingPage = () => {
 
       <div className="cta">
         <Link to="/todos" className="cta-button">
-          Go to Todo
+          Go to Tasksy
         </Link>
       </div>
     </div>

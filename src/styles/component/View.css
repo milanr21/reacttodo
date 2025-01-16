@@ -9,13 +9,11 @@
 }
 
 .view-todo__header {
-  text-align: center;
-  margin-bottom: var(--spacing-md);
+  text-align: left;
 }
 
 .view-todo__header h2 {
   font-size: 1.5rem;
-  color: var(--color-primary);
   font-weight: 700;
   margin: 0;
 }

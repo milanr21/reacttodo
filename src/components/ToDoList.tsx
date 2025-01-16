@@ -1,6 +1,7 @@
 import React from "react";
 import { Edit, Trash, Eye } from "lucide-react";
 import "../styles/component/TodoList.css";
+import { SortableList } from "../Sortable/SortableList";
 
 interface Todo {
   id: string;
@@ -34,27 +35,31 @@ const ToDoList: React.FC<ToDoListProps> = ({
         {new Date().toLocaleDateString()}
       </div>
       <div className="todo-item__actions">
-        <button
-          onClick={() => onHandleViewTodo(todo.id)}
-          className="icon-btn"
-          title="View Todo"
-        >
-          <Eye size={20} />
-        </button>
-        <button
-          onClick={() => onHandleEditTodo(todo.id)}
-          className="icon-btn"
-          title="Edit Todo"
-        >
-          <Edit size={20} />
-        </button>
-        <button
-          onClick={() => onHandleDeleteTodo(todo.id)}
-          className="icon-btn icon-btn--danger"
-          title="Delete Todo"
-        >
-          <Trash size={20} />
-        </button>
+        <SortableList.DragHandle />
+
+        <div className="todo-item__actions-right">
+          <button
+            onClick={() => onHandleViewTodo(todo.id)}
+            className="icon-btn"
+            title="View Todo"
+          >
+            <Eye size={20} />
+          </button>
+          <button
+            onClick={() => onHandleEditTodo(todo.id)}
+            className="icon-btn"
+            title="Edit Todo"
+          >
+            <Edit size={20} />
+          </button>
+          <button
+            onClick={() => onHandleDeleteTodo(todo.id)}
+            className="icon-btn icon-btn--danger"
+            title="Delete Todo"
+          >
+            <Trash size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );
