@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Modal from '../../components/Modal/Modal';
-import { EditToDoProps } from '../../types/todo';
+import { EditToDoProps, Todo } from '../../types/todo';
 
 import '../../styles/component/Input.css';
 import '../../styles/component/Button.css';
@@ -45,7 +45,7 @@ const EditToDo: React.FC<EditToDoProps> = ({
 
     if (title.trim() === '' || description.trim() === '') return;
 
-    const updatedTodo = {
+    const updatedTodo: Todo = {
       ...todo,
       title: title,
       description: description,

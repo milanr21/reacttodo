@@ -15,7 +15,7 @@ export interface Todo {
   title: string;
   description: string;
   completed: boolean;
-  createdDate: string;
+  createdDate?: string;
   startDate?: string;
   endDate?: string;
 }
