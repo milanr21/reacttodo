@@ -1,14 +1,14 @@
-import { Plus } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import MainLogoImg from '../../assets/Logo.png';
-import { useDispatch, useSelector } from 'react-redux';
+import { Plus } from "lucide-react";
+import { useState, useEffect } from "react";
+import MainLogoImg from "../../assets/Logo.png";
+import { useDispatch, useSelector } from "react-redux";
 
-import { isEmpty } from '../../utils/isEmpty';
+import { isEmpty } from "../../utils/isEmpty";
 
-import AddToDo from '../../features/Todos/AddToDo';
-import ViewTodo from '../../features/Todos/ViewToDo';
-import EditToDo from '../../features/Todos/EditToDo';
-import ToDoList from '../../features/Todos/ToDoList';
+import AddToDo from "../../features/Todos/AddToDo";
+import ViewTodo from "../../features/Todos/ViewToDo";
+import EditToDo from "../../features/Todos/EditToDo";
+import ToDoList from "../../features/Todos/ToDoList";
 import {
   addTodoSuccess,
   getTodo,
@@ -16,12 +16,13 @@ import {
   updateTodoSuccess,
   getTodoSuccess,
   toggleCompleteTodo,
-} from '../../features/Todos/store/TodoSlice';
+} from "../../features/Todos/store/TodoSlice";
 
-import { RootState, AppDispatch } from '../../store/store';
-import { SortableList } from '../../Sortable/SortableList';
+import { RootState, AppDispatch } from "../../store/store";
+import { SortableList } from "../../Sortable/SortableList";
 
-import '../../styles/component/Todos.css';
+import "../../styles/component/Todos.css";
+import { Todo } from "../../types/todo";
 
 const Todos = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -29,7 +30,7 @@ const Todos = () => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [viewingTodo, setViewingTodo] = useState<string | null>(null);
   const [editingTodoId, setEditingTodoId] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const { todos } = useSelector((state: RootState) => state.todo);
 
   const [items, setItems] = useState(todos);
@@ -44,13 +45,20 @@ const Todos = () => {
   };
 
   useEffect(() => {
-    const storedTodos = loadFromLocalStorage('todos');
+    const storedTodos = loadFromLocalStorage("todos");
 
-    let loadLocalStorage: any = [];
+    let loadLocalStorage: {
+      id: string;
+      title: string;
+      description: string;
+      startDate: string;
+      endDate: string;
+      completed: boolean;
+    }[] = [];
     try {
       loadLocalStorage = storedTodos ? JSON.parse(storedTodos) : [];
     } catch (e) {
-      console.error('Error parsing localStorage data', e);
+      console.error("Error parsing localStorage data", e);
       loadLocalStorage = [];
     }
 
@@ -128,13 +136,13 @@ const Todos = () => {
     : null;
 
   return (
-    <div className='todo-container'>
-      <div className='todo-header'>
-        <img src={MainLogoImg} alt='Logo' />
-        <div className='search-bar'>
+    <div className="todo-container">
+      <div className="todo-header">
+        <img src={MainLogoImg} alt="Logo" />
+        <div className="search-bar">
           <input
-            type='text'
-            placeholder='search....'
+            type="text"
+            placeholder="search...."
             value={searchQuery}
             onChange={handleSearch}
           />
@@ -143,7 +151,7 @@ const Todos = () => {
       </div>
 
       <div>
-        <button onClick={handleAddModal} className='btn btn--primary'>
+        <button onClick={handleAddModal} className="btn btn--primary">
           <Plus /> <span>Add</span>
         </button>
       </div>
@@ -159,13 +167,13 @@ const Todos = () => {
           showEditModal={showModal}
           //showEditModal={showModal}
           todo={todos.find((todo) => todo.id === editingTodoId)!}
-          onHandleUpdateTodo={handleUpdateTodo}
+          onHandleUpdateTodo={handleUpdateTodo as (updatedTodo: Todo) => void}
           onCancelEdit={handleCancelEdit}
         />
       )}
 
       {isEmpty(items) ? (
-        <p className='empty-todo-message'>
+        <p className="empty-todo-message">
           No todos yet! Start by adding your first task to stay organized.
         </p>
       ) : (
@@ -177,7 +185,7 @@ const Todos = () => {
               <ToDoList
                 todo={{
                   ...item,
-                  createdDate: item.startDate || 'N/A',
+                  createdDate: item.startDate || "N/A",
                 }}
                 onHandleDeleteTodo={handleDeleteTodo}
                 onHandleEditTodo={handleEditTodo}
@@ -187,10 +195,10 @@ const Todos = () => {
               <button
                 onClick={() => handleToggleComplete(item.id)}
                 className={`btn ${
-                  item.completed ? 'btn--success' : 'btn--secondary'
+                  item.completed ? "btn--success" : "btn--secondary"
                 }`}
               >
-                {item.completed ? 'Mark Completed' : 'Mark Incompleted'}
+                {item.completed ? "Mark Completed" : "Mark Incompleted"}
               </button>
             </SortableList.Item>
           )}

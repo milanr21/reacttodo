@@ -2,12 +2,12 @@ export interface TodoState {
   loading: boolean;
   success: boolean;
   error: string | null;
-  todos: Array<any>;
+  todos: Todo[];
 }
 
 export interface Action {
   type: string;
-  payload?: any;
+  payload?: string | number | boolean | Todo | Todo[];
 }
 
 export interface Todo {
