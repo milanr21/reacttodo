@@ -90,6 +90,7 @@ const Todos = () => {
   };
 
   const handleEditTodo = (todoId: string) => {
+    setShowModal(true);
     setEditingTodoId(todoId);
   };
 
